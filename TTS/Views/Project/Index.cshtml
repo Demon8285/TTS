@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<div class="row">
+    <div class="col-9">
+        <input id="projectinput" type="text" class="form-control" placeholder="Введіть назву проекту" />
+    </div>
+    <button class="btn btn-info col-3" data-target="#NewProject" data-toggle="modal">Добавить новий проект</button>
+</div>
+<hr />
+<div class="modal fade" id="NewProject" tabindex="-1" role="dialog" aria-labelledby="NewProject" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center col-11" id="exampleModalLabel">Добавить новий проект</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-controller="Project" asp-action="Add">
+                    <div class="form-group">
+                        <label class="control-label text-center col-12">Назва</label>
+                        <input type="text" class="form-control" name="name" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label text-center col-12">Короткий опис</label>
+                        <input type="text" class="form-control" name="about" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Добавить" class="btn btn-success text-center col-10" />
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card-columns">
+    @for (int i = 0; i < 17; i++)
+    {
+        <div class="card" id="cards">
+            <div class="card-header">
+                <div class="row">
+                    <a class="col-8" asp-controller="Project" asp-action="Tasks" asp-route-id="1"><h3>Project</h3></a>
+                    <a class="btn btn-secondary col-4 text-white" id="2">Видалить</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>Description</p>
+            </div>
+        </div>
+    }
+    <div class="card" id="cards">
+        <div class="card-header">
+            <div class="row">
+                <h3 class="col-8">New</h3>
+                <a class="btn btn-secondary col-4" id="2">Видалить</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <p>Description</p>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#projectinput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $(".card").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        $(".btn-secondary").click(function () {
+            var id_t = $(this).attr("id");
+            var card = $(this).parent().parent().parent();
+            $.get("/Project/ProjectDelete", { id: id_t }, function (data) {
+                card.remove();
+            });
+        });
+    });
+</script>
+
