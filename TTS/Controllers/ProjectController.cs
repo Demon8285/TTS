@@ -75,9 +75,9 @@ namespace TTS.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = context.Users.First(x => x.Id == userId);
-            if (user.Subscribe == null || user.Subscribe.Ticks < DateTime.Now.Ticks)
+            if (user.Subscribe == null || user.Subscribe < DateTime.Now)
             {
-                RedirectToAction("Subscribe", "Home");
+                //throw new ArgumentException("Not subbsribe");
             }
             var task = new Entities.Task { TaskName = name, ProjectId = projectid };
             context.Tasks.Add(task);
@@ -88,9 +88,9 @@ namespace TTS.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = context.Users.First(x => x.Id == userId);
-            if (user.Subscribe == null || user.Subscribe.Ticks < DateTime.Now.Ticks)
+            if (user.Subscribe == null || user.Subscribe < DateTime.Now)
             {
-                RedirectToAction("Subscribe", "Home");
+                return RedirectToAction("Subscribe", "Home");
             }
             var projetct = new Entities.Project { ProjectName = name, About = about, UserId = userId };
             context.Projects.Add(projetct);

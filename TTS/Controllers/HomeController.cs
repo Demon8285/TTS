@@ -36,11 +36,14 @@ namespace TTS.Controllers
             return View();
         }
         [Authorize]
+        [HttpGet]
         public IActionResult Subscribe()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewBag.userid = userId;
             return View();
         }
+        [HttpPost]
         [Authorize]
         public IActionResult Subscribe(string id)
         {

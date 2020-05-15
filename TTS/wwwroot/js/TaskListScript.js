@@ -31,7 +31,7 @@ $(".btn-outline-success").click(function () {
             `<td><a class="btn btn-danger text-white" id="${data}">Видалить</a></td>` +
             `</tr>`;
         $("tbody").append(newrow);
-    });
+    }, e);
 });
 $(".tasktime").on("change", function () {
     var value = $(this).val().toLowerCase();
