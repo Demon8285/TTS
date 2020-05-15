@@ -1,9 +1,9 @@
-﻿
+﻿@model List<TTS.Entities.Task>
 @{
     ViewData["Title"] = "Tasks";
 }
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<h2>Project: Project</h2>
+    <h2 class="myproject" id=@ViewBag.ProjectId>Project: @ViewBag.ProjectName</h2>
 <hr />
 <div class="input-group mb-3">
     <input id="taskinput" type="text" class="form-control" placeholder="Назва задачі" aria-label="Recipient's username" aria-describedby="basic-addon2">
@@ -22,13 +22,13 @@
         </tr>
     </thead>
     <tbody>
-        @for (int i = 0; i < 7; i++)
+        @foreach(var task in Model)
         {
             <tr>
-                <th><input class="form-control taskname text-center" type="text" value="1" id="2" /></th>
-                <td><input class="form-control tasktime text-center" type="number" value="1" id="2" /></td>
-                <td><input type="checkbox" class="taskstatus" checked="checked" /></td>
-                <td><a class="btn btn-danger text-white" id="1sdds">Видалить</a></td>
+                <th><input class="form-control taskname text-center" type="text" value=@task.TaskName id=@task.TaskId /></th>
+                <td><input class="form-control tasktime text-center" type="number" value=@task.TaskTime id=@task.TaskId /></td>
+                <td><input type="checkbox" class="taskstatus" checked=@task.TaskStatus id=@task.TaskId /></td>
+                <td><a class="btn btn-danger text-white" id=@task.TaskId >Видалить</a></td>
             </tr>
         }
     </tbody>

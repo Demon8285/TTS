@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TTS.Data.Migrations
+namespace TTS.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class one : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +39,8 @@ namespace TTS.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Subscribe = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,7 +52,7 @@ namespace TTS.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -73,7 +73,7 @@ namespace TTS.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -153,6 +153,46 @@ namespace TTS.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Project",
+                columns: table => new
+                {
+                    ProjectId = table.Column<Guid>(nullable: false),
+                    ProjectName = table.Column<string>(nullable: false),
+                    About = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Project", x => x.ProjectId);
+                    table.ForeignKey(
+                        name: "FK_Project_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Task",
+                columns: table => new
+                {
+                    TaskId = table.Column<Guid>(nullable: false),
+                    TaskName = table.Column<string>(nullable: false),
+                    TaskTime = table.Column<double>(nullable: false),
+                    ProjectId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Task", x => x.TaskId);
+                    table.ForeignKey(
+                        name: "FK_Task_Project_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Project",
+                        principalColumn: "ProjectId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +231,16 @@ namespace TTS.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Project_UserId",
+                table: "Project",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Task_ProjectId",
+                table: "Task",
+                column: "ProjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,7 +261,13 @@ namespace TTS.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Task");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Project");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -17,13 +17,13 @@ namespace TTS.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<TTS.Entities.ApplicationUser> _userManager;
+        private readonly SignInManager<TTS.Entities.ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, 
+        public LoginModel(SignInManager<TTS.Entities.ApplicationUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+            UserManager<TTS.Entities.ApplicationUser> userManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
