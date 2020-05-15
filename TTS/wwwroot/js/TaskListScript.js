@@ -25,10 +25,10 @@ $(".btn-outline-success").click(function () {
     var projectid = $(".myproject").attr("id");
     $.get("/Project/AddTask", { name: name, projectid: projectid }, function (data) {
         var newrow = `<tr>` +
-            `<th><input class="form-control taskname text-center" type="text" value=${name} id=${data}</th>` +
-            `<td><input class="form-control tasktime text-center" type="number" value=0 id=${data}</td>` +
-            `<td><input type="checkbox" class="taskstatus" id=${data}</td>`+
-            `<td><a class="btn btn-danger text-white" id=${data}>Видалить</a></td>` +
+            `<th><input class="form-control taskname text-center" type="text" value="${name}" id="${data}"</th>` +
+            `<td><input class="form-control tasktime text-center" type="number" value="0" id="${data}"</td>` +
+            `<td><input type="checkbox" class="taskstatus" id="${data}"</td>`+
+            `<td><a class="btn btn-danger text-white" id="${data}">Видалить</a></td>` +
             `</tr>`;
         $("tbody").append(newrow);
     });

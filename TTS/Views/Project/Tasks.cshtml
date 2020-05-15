@@ -24,12 +24,13 @@
     <tbody>
         @foreach(var task in Model)
         {
-            <tr>
-                <th><input class="form-control taskname text-center" type="text" value=@task.TaskName id=@task.TaskId /></th>
-                <td><input class="form-control tasktime text-center" type="number" value=@task.TaskTime id=@task.TaskId /></td>
-                <td><input type="checkbox" class="taskstatus" checked=@task.TaskStatus id=@task.TaskId /></td>
-                <td><a class="btn btn-danger text-white" id=@task.TaskId >Видалить</a></td>
-            </tr>
+        <tr>
+            <th><input class="form-control taskname text-center" type="text" value=@task.TaskName id=@task.TaskId /></th>
+            <td><input class="form-control tasktime text-center" type="number" value=@task.TaskTime id=@task.TaskId /></td>
+            <td><input type="checkbox" class="taskstatus" checked=@task.TaskStatus id=@task.TaskId /></td>
+            <td><a class="btn btn-danger text-white" id=@task.TaskId>Видалить</a></td>
+            <th class="text-hide"><h3>@task.TaskName</h3></th>
+        </tr>
         }
     </tbody>
 </table>
