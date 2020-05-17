@@ -32,10 +32,11 @@ namespace TTS.Entities
         {
             get
             {
-                if (Tasks.All(x => x.TaskStatus){
+                if (Tasks.All(x => x.TaskStatus) && Tasks.Count() > 0)
+                {
                     return "bg-success";
                 }
-                else if(Tasks.Any(x => x.TaskTime > 0))
+                else if(Tasks.Select(x => x.TaskTime).Sum() > 0)
                 {
                     return "bg-info";
                 }

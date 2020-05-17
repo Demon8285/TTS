@@ -30,8 +30,13 @@ namespace TTS.Controllers
                 TempData["Back"] = Request.Path.ToString();
                 return RedirectToAction("Subscribe", "Home");
             }
-            var list = context.Projects.Where(x => x.UserId == userId).ToList();
-            return View(list);
+            var list = context.Projects.Include(x => x.Tasks).Where(x => x.UserId == userId).ToArray();
+            var result = new List<TTS.Entities.extendedProject>();
+            foreach(var x in list)
+            {
+                result.Add(new Entities.extendedProject { About = x.About, ProjectId = x.ProjectId, ProjectName = x.ProjectName, UserId = x.UserId, Tasks = x.Tasks, User = x.User });
+            }
+            return View(result);
         }
         public IActionResult Tasks(Guid id)
         {
@@ -84,12 +89,19 @@ namespace TTS.Controllers
             context.SaveChanges();
             return true;
         }
-        public Guid AddTask(string name, Guid projectid)
+        public ActionResult AddTask(string name, Guid projectid)
         {
-            var task = new Entities.Task { TaskName = name, ProjectId = projectid };
-            context.Tasks.Add(task);
-            context.SaveChanges();
-            return task.TaskId;
+            try
+            {
+                var task = new Entities.Task { TaskName = name, ProjectId = projectid };
+                context.Tasks.Add(task);
+                context.SaveChanges();
+                return Json(new { success = true, id = task.TaskId });
+            }
+            catch(Exception error)
+            {
+                return Json(new { success = false, message = error.Message});
+            }
         }
         public IActionResult ProjectAdd(string name, string about)
         {

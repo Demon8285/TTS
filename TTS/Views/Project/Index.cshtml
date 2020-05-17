@@ -1,4 +1,4 @@
-﻿@model List<TTS.Entities.Project>
+﻿@model List<TTS.Entities.extendedProject>
 @{
     ViewData["Title"] = "Index";
 }
@@ -41,7 +41,7 @@
 <div class="card-columns" style="color: black">
     @foreach(var project in Model)
     {
-        <div class="card" id="cards">
+        <div class="card @project.GetColor" id="cards">
             <div class="card-header">
                 <div class="row">
                     <a class="col-8" asp-controller="Project" asp-action="Tasks" asp-route-id=@project.ProjectId><h3>@project.ProjectName</h3></a>

@@ -24,13 +24,18 @@ $("#taskbuttonadd").click(function () {
     var name = $("#taskinput").val();
     var projectid = $(".myproject").attr("id");
     $.get("/Project/AddTask", { name: name, projectid: projectid }, function (data) {
-        var newrow = `<tr>` +
-            `<th><input class="form-control taskname text-center" type="text" value="${name}" id="${data}"</th>` +
-            `<td><input class="form-control tasktime text-center" type="number" value="0" id="${data}"</td>` +
-            `<td><input type="checkbox" class="taskstatus" id="${data}"</td>`+
-            `<td><a class="btn btn-danger text-white" id="${data}">Видалить</a></td>` +
-            `</tr>`;
-        $("tbody").append(newrow);
+        if (data.success) {
+            var newrow = `<tr>` +
+                `<th><input class="form-control taskname text-center" type="text" value="${name}" id="${data.id}"</th>` +
+                `<td><input class="form-control tasktime text-center" type="number" value="0" id="${data.id}"</td>` +
+                `<td><input type="checkbox" class="taskstatus" id="${data.id}"</td>` +
+                `<td><a class="btn btn-danger text-white" id="${data.id}">Видалить</a></td>` +
+                `</tr>`;
+            $("tbody").append(newrow);
+        }
+        else {
+            alert(data.message);
+        }
     });
 });
 $("table").on("change",".tasktime", function () {
