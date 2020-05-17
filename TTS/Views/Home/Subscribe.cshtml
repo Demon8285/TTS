@@ -1,15 +1,25 @@
 ﻿@{
     ViewData["Title"] = "Subscribe";
 }
-
-<div class="card">
-    <div class="card-body text-center">
-        <h4>Subscribe</h4>
-        <h5>Якщо ви хочете користуватись даним сервісом далі вам необхідна підписка</h5>
-        <h5>Ціна підписки: 10$(за 30 дній)</h5>
-        <h5>Якщо ви бажаєте підписаться, натисните кнопку нижче</h5>
-        <form asp-action="Subscribe" method="post" asp-route-id=@ViewBag.userid>
-            <input type="submit" value="Підписаться" class="btn btn-success"/>
-        </form>
-    </div>
+<link href="~/css/SubscribeStyle.css" rel="stylesheet" />
+<div class="box">
+    <h1>Підписка</h1>
+    <h3>За 10$ в місяць</h3>
+    <h3>Підписавшись, ви:</h3>
+    <ol>
+        <li><p>Отримаєте необмежений доступ до сервіса</p></li>
+        <li><p>Отримаєте необмежений доступ до сервіса</p></li>
+        <li><p>Зможете користуватись сервісом без реклами</p></li>
+    </ol>
+    <form method="post" class="line-buy" asp-controller="Home" asp-action="Subscribe" asp-route-id=@ViewBag.userid>
+        <div class="buy_card">
+            <input type="image" src="~/icon/credit_card-white-48dp.svg" />
+        </div>
+        <div class="buy_card">
+            <input type="image" src="~/icon/card_giftcard-white-48dp.svg" />
+        </div>
+        <div class="buy_card">
+            <input type="image" style="height: 48px;" src="~/icon/paypal-logo.svg" />
+        </div>
+    </form>
 </div>

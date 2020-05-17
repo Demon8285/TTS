@@ -23,21 +23,50 @@ namespace TTS.Controllers
         {
             var user = context.Users.FirstOrDefault(x => x.Email == useremail);
             if (user == null) return null;
-            var project = context.Projects.Where(x => x.UserId == user.Id).ToArray();
+            var project = context.Projects.Include(x => x.Tasks).Where(x => x.UserId == user.Id).ToArray();
+            foreach(var x in project)
+            {
+                x.User = null;
+                foreach(var y in x.Tasks)
+                {
+                    y.Project = null;
+                }
+            }
             return Json(project);
         }
-        public JsonResult GetTask(string useremail, string projectname)
+        public JsonResult GetTask(string useremail)
         {
             var user = context.Users.FirstOrDefault(x => x.Email == useremail);
             if (user == null) return null;
-            var project = context.Projects.FirstOrDefault(x => x.UserId == user.Id && x.ProjectName == projectname);
-            if (project == null) return null;
-            var task = context.Tasks.Where(x => x.ProjectId == project.ProjectId).ToArray();
+            var task = context.Tasks.Include(x => x.Project).Where(x => x.Project.UserId == user.Id).ToArray();
             foreach(var x in task)
             {
-                x.Project = null;
+                x.Project.Tasks = null;
             }
             return Json(task);
+        }
+        public JsonResult CheckEmail(string email)
+        {
+            return Json(context.Users.Any(x => x.Email == email));
+        }
+        public JsonResult AddTaskTime(Guid id, double time)
+        {
+            try
+            {
+                var task = context.Tasks.FirstOrDefault(x => x.TaskId == id);
+                if (task == null)
+                {
+                    return Json(new { result = false, message = "Email is not exist"});
+                }
+                task.TaskTime += time;
+                context.Update(task);
+                context.SaveChanges();
+                return Json(new { result = true, messgae = ""});
+            }
+            catch(Exception error)
+            {
+                return Json(new { result = false, message = error.Message });
+            }
         }
     }
 }

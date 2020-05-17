@@ -1,7 +1,5 @@
-﻿body {
-}
-.box {
-    background-color: #332424;
+﻿.box {
+    background-color: #191919;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -11,6 +9,7 @@
     padding: 50px;
     border-radius: 30px;
     color: white;
+    box-shadow: 5px 5px 5px 5px black;
 }
 .box h1{
     font-weight: 300;

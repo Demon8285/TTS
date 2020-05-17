@@ -4,14 +4,14 @@
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<div class="row">
-    <div class="col-9">
-        <input id="projectinput" type="text" class="form-control" placeholder="Введіть назву проекту" />
+<div class="input-group">
+    <input id="projectinput" type="text" class="form-control" placeholder="Введіть назву проекту" />
+    <div class="input-group-append">
+        <button class="btn btn-success" data-target="#NewProject" data-toggle="modal">Додати</button>
     </div>
-    <button class="btn btn-info col-3" data-target="#NewProject" data-toggle="modal">Добавить новий проект</button>
 </div>
 <hr />
-<div class="modal fade" id="NewProject" tabindex="-1" role="dialog" aria-labelledby="NewProject" aria-hidden="true">
+<div class="modal fade text-dark" id="NewProject" tabindex="-1" role="dialog" aria-labelledby="NewProject" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -38,14 +38,14 @@
         </div>
     </div>
 </div>
-<div class="card-columns">
+<div class="card-columns" style="color: black">
     @foreach(var project in Model)
     {
         <div class="card" id="cards">
             <div class="card-header">
                 <div class="row">
                     <a class="col-8" asp-controller="Project" asp-action="Tasks" asp-route-id=@project.ProjectId><h3>@project.ProjectName</h3></a>
-                    <a class="btn btn-secondary col-4 text-white" id=@project.ProjectId>Видалить</a>
+                    <a class="btn btn-secondary col-4 text-white text-center" style="margin:auto" id=@project.ProjectId>Видалить</a>
                 </div>
             </div>
             <div class="card-body">

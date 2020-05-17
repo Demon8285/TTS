@@ -22,4 +22,28 @@ namespace TTS.Entities
         public ICollection<Task> Tasks { get; set; } = new HashSet<Task>();
 
     }
+    public class extendedProject : Project
+    {
+        public double SumTask
+        {
+            get { return Tasks.Select(x => x.TaskTime).Sum(); }
+        }
+        public string GetColor
+        {
+            get
+            {
+                if (Tasks.All(x => x.TaskStatus){
+                    return "bg-success";
+                }
+                else if(Tasks.Any(x => x.TaskTime > 0))
+                {
+                    return "bg-info";
+                }
+                else
+                {
+                    return "bg-danger";
+                }
+            }
+        }
+    }
 }

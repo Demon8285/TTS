@@ -1,4 +1,5 @@
 ﻿var pieChart;
+var ProfileChart;
 function Load() {
     var oilCanvas = document.getElementById("allprojecttimeChart");
     var lables = [];
@@ -30,7 +31,13 @@ function Load() {
             options: {
                 showDatasetLabels: true,
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: false,
+                legend: {
+                    labels: {
+                        // This more specific font property overrides the global property
+                        fontColor: 'white'
+                    }
+                }
             }
         });
     });
@@ -71,13 +78,22 @@ function GetInfoProject(project) {
                 }]
         };
         var canvas = $("#projectTimeChart");
-        var ProfileChart = new Chart(canvas, {
+        if (ProfileChart != null) {
+            ProfileChart.destroy();
+        }
+        ProfileChart = new Chart(canvas, {
             type: 'pie',
             data: data_project,
             options: {
                 showDatasetLabels: true,
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: false,
+                legend: {
+                    labels: {
+                        // This more specific font property overrides the global property
+                        fontColor: 'white'
+                    }
+                }
             }
         });
     });

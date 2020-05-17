@@ -1,7 +1,8 @@
 ﻿function load() {
-    var er_box = $(".errors_box");
-    if (er_box.children().length > 1) {
-        er_box.show();
+    var li = $(".errors_box").find("ul").find("li");
+    var x = li.css('display')
+    if (li.length > 0 && x != "none") {
+        $(".errors_box").show();
     }
 }
 load();

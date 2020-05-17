@@ -20,7 +20,7 @@ $("#taskinput").on("keyup", function () {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
 });
-$(".btn-outline-success").click(function () {
+$("#taskbuttonadd").click(function () {
     var name = $("#taskinput").val();
     var projectid = $(".myproject").attr("id");
     $.get("/Project/AddTask", { name: name, projectid: projectid }, function (data) {

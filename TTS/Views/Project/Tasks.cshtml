@@ -2,38 +2,40 @@
 @{
     ViewData["Title"] = "Tasks";
 }
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <h2 class="myproject" id=@ViewBag.ProjectId>Назва проекту: @ViewBag.ProjectName</h2>
-<hr />
-<div class="input-group mb-3">
-    <input id="taskinput" type="text" class="form-control" placeholder="Назва задачі" aria-label="Recipient's username" aria-describedby="basic-addon2">
-    <div class="input-group-append">
-        <button class="btn btn-outline-success" type="button">Добавить</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<div class="col-7 text-center" style="margin: auto">
+    <h2 class="myproject" id=@ViewBag.ProjectId>Задачі проекту @ViewBag.ProjectName</h2>
+    <hr />
+    <div class="input-group mb-3">
+        <input id="taskinput" type="text" class="form-control" placeholder="Назва задачі" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <div id="taskbuttonadd" class="input-group-append">
+            <button class="btn btn-success" type="button">Добавить</button>
+        </div>
     </div>
+    <hr />
+    <table class="table table-dark table-borderless" style="color: white">
+        <thead>
+            <tr class="text-center">
+                <th scope="col">Назва</th>
+                <th scope="col">Час</th>
+                <th scope="col">Статус</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var task in Model)
+            {
+                <tr>
+                    <th><input class="form-control taskname text-center" type="text" value=@task.TaskName id=@task.TaskId /></th>
+                    <td><input class="form-control tasktime text-center" type="number" value=@task.TaskTime id=@task.TaskId /></td>
+                    <td style="vertical-align:central;text-align:center"><input type="checkbox" class="taskstatus" checked=@task.TaskStatus id=@task.TaskId /></td>
+                    <td><a class="btn btn-danger text-white" id=@task.TaskId>Видалить</a></td>
+                    <th class="text-hide"><p>@task.TaskName</p></th>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
-<hr />
-<table class="table">
-    <thead>
-        <tr class="text-center">
-            <th scope="col">Назва</th>
-            <th scope="col">Час</th>
-            <th scope="col">Статус</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var task in Model)
-        {
-        <tr>
-            <th><input class="form-control taskname text-center" type="text" value=@task.TaskName id=@task.TaskId /></th>
-            <td><input class="form-control tasktime text-center" type="number" value=@task.TaskTime id=@task.TaskId /></td>
-            <td><input type="checkbox" class="taskstatus" checked=@task.TaskStatus id=@task.TaskId /></td>
-            <td><a class="btn btn-danger text-white" id=@task.TaskId>Видалить</a></td>
-            <th class="text-hide"><h3>@task.TaskName</h3></th>
-        </tr>
-        }
-    </tbody>
-</table>
 <div class="toast bg-success text-white" style="position:absolute; right:40px; bottom: 0">
     <div class="toast-body">Збереженно</div>
 </div>
