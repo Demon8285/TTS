@@ -3,7 +3,7 @@
     ViewData["Title"] = "Tasks";
 }
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <h2 class="myproject" id=@ViewBag.ProjectId>Project: @ViewBag.ProjectName</h2>
+    <h2 class="myproject" id=@ViewBag.ProjectId>Назва проекту: @ViewBag.ProjectName</h2>
 <hr />
 <div class="input-group mb-3">
     <input id="taskinput" type="text" class="form-control" placeholder="Назва задачі" aria-label="Recipient's username" aria-describedby="basic-addon2">
@@ -34,4 +34,7 @@
         }
     </tbody>
 </table>
+<div class="toast bg-success text-white" style="position:absolute; right:40px; bottom: 0">
+    <div class="toast-body">Збереженно</div>
+</div>
 <script src="~/js/TaskListScript.js" asp-append-version="true"></script>

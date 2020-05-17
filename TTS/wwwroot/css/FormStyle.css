@@ -1,0 +1,93 @@
+﻿body {
+}
+.box {
+    background-color: #332424;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-family: sans-serif;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 50px;
+    border-radius: 30px;
+    color: white;
+}
+.box h1{
+    font-weight: 300;
+}
+.box p{
+    font-style: italic;
+    font-size: 12px;
+}
+.box .input-box{
+    display: flex;
+}
+.box .input-box input{
+    display: block;
+    border-radius: 30px;
+    text-align: center;
+    padding: 15px 5px;
+    outline: none;
+    margin: 20px auto;
+    color: white;
+}
+.box .input-box input[type = "text"], input[type = "password"], input[type="email"]{
+    background: none;
+    border: 2px solid #2ecc71;
+}
+.box .input-box input:invalid{
+    border: 2px solid #dc1818;
+}
+.box .input-box input[type="submit"]{
+    background: #288d43;
+    padding: 15px;
+    border: none;    
+    transition: 0.25s;
+}
+.box .input-box input[type="submit"]:hover{
+    border: 2px solid #c6b9b9;
+}
+.box .input-box img{
+    margin: 20px 0px 20px -40px;
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border-radius: 120%;
+}
+.errors_box {
+    display: none;
+    background-color: white;
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-family: sans-serif;
+    transform: translate(-50%, -50%);
+    padding: 0px 0px;
+    border-radius: 30px;
+}
+.errors_box ul{
+    margin: auto;
+    padding: 10px;
+    list-style-position: inside;
+    margin: auto;
+    list-style-type: none;
+    color: #ff0000;
+}
+.errors_box ul li{
+    margin: auto;
+    padding: 5px 50px;
+    text-align: center;
+    margin-right: auto;
+}
+.errors_box .error_header{
+    padding: 10px 50px;
+    border-bottom: 2px solid #808080;
+}
+.errors_box input[type="button"]{
+    text-align: center;
+    background: none;
+    color: black;
+    border: none;
+    right: 0;
+}

@@ -1,16 +1,16 @@
-﻿$(".btn-danger").click(function () {
+﻿$("table").on("click",".btn-danger",function () {
     var id_t = $(this).attr("id");
     var tr = $(this).parent().parent();
     $.get("/Project/TaskDelete", { id: id_t }, function (data) {
         tr.remove();
     });
 });
-$(".taskname").on("change", function () {
+$("table").on("change",".taskname", function () {
     var value = $(this).val().toLowerCase();
     var id_t = $(this).attr("id");
     $.get("/Project/UpdateTaskName", { id: id_t, new_name: value }, function (data) {
         if (data) {
-            alert("Ви змінили назву");
+            $(".toast").toast('show');
         }
     });
 });
@@ -31,25 +31,23 @@ $(".btn-outline-success").click(function () {
             `<td><a class="btn btn-danger text-white" id="${data}">Видалить</a></td>` +
             `</tr>`;
         $("tbody").append(newrow);
-    }, e);
+    });
 });
-$(".tasktime").on("change", function () {
+$("table").on("change",".tasktime", function () {
     var value = $(this).val().toLowerCase();
     var id_t = $(this).attr("id");
     $.get("/Project/UpdateTaskTime", { id: id_t, new_time: value }, function (data) {
         if (data) {
-            alert("Ви змінили час");
+            $(".toast").toast('show');
         }
     });
 });
-$(".taskstatus").on("change", function (event) {
+$("table").on("change",".taskstatus", function (event) {
     var value = event.target.checked
     var id_t = $(this).attr("id");
     $.get("/Project/UpdateTaskStatus", { id: id_t, new_status: value }, function (data) {
         if (data) {
-            alert("Ви змінили статус");
+            $(".toast").toast('show');
         }
     });
 });
-var t = "dd {0}".format(1);
-alert(t);

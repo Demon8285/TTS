@@ -51,7 +51,7 @@ namespace TTS.Controllers
             user.Subscribe = DateTime.Now.AddDays(30);
             context.Users.Update(user);
             context.SaveChanges();
-            return RedirectToAction("Index", "Project");
+            return Redirect(TempData["Back"].ToString());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

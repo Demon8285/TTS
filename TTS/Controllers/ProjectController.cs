@@ -24,11 +24,24 @@ namespace TTS.Controllers
         public IActionResult Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = context.Users.First(x => x.Id == userId);
+            if (user.Subscribe == null || user.Subscribe < DateTime.Now)
+            {
+                TempData["Back"] = Request.Path.ToString();
+                return RedirectToAction("Subscribe", "Home");
+            }
             var list = context.Projects.Where(x => x.UserId == userId).ToList();
             return View(list);
         }
         public IActionResult Tasks(Guid id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = context.Users.First(x => x.Id == userId);
+            if (user.Subscribe == null || user.Subscribe < DateTime.Now)
+            {
+                TempData["Back"] = Request.Path.ToString();
+                return RedirectToAction("Subscribe", "Home");
+            }
             var list = context.Tasks.Where(x => x.ProjectId == id).ToList();
             ViewBag.ProjectId = id;
             ViewBag.ProjectName = context.Projects.First(x => x.ProjectId == id).ProjectName;
@@ -73,12 +86,6 @@ namespace TTS.Controllers
         }
         public Guid AddTask(string name, Guid projectid)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = context.Users.First(x => x.Id == userId);
-            if (user.Subscribe == null || user.Subscribe < DateTime.Now)
-            {
-                //throw new ArgumentException("Not subbsribe");
-            }
             var task = new Entities.Task { TaskName = name, ProjectId = projectid };
             context.Tasks.Add(task);
             context.SaveChanges();
@@ -87,11 +94,6 @@ namespace TTS.Controllers
         public IActionResult ProjectAdd(string name, string about)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = context.Users.First(x => x.Id == userId);
-            if (user.Subscribe == null || user.Subscribe < DateTime.Now)
-            {
-                return RedirectToAction("Subscribe", "Home");
-            }
             var projetct = new Entities.Project { ProjectName = name, About = about, UserId = userId };
             context.Projects.Add(projetct);
             context.SaveChanges();

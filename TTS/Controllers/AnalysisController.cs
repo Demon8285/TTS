@@ -37,7 +37,8 @@ namespace TTS.Controllers
         }
         public JsonResult GetProjectInfo(string project)
         {
-            var tasks = context.Projects.Include(x => x.Tasks).First(x => x.ProjectName == project).Tasks;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var tasks = context.Projects.Include(x => x.Tasks).First(x => x.ProjectName == project && x.UserId == userId).Tasks;
             var v = new Dictionary<string, double>();
             foreach (var item in tasks)
             {
